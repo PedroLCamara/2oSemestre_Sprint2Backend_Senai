@@ -33,32 +33,36 @@ namespace senai_filmes_webAPI.Repositories
         {
             GeneroDomain Genero = new GeneroDomain();
             SqlConnection Conexao = new SqlConnection(StringConexao);
-            string QuerySelecionarPorId = $"SELECT IDGenero, NomeGenero FROM GENERO WHERE IDGenero = {IdGenero}";
+            string QuerySelecionarPorId = $"SELECT IDGenero, NomeGenero FROM GENERO WHERE IDGenero = @IdGenero";
             Conexao.Open();
             SqlDataReader LeitorDeDados;
             SqlCommand Comando = new SqlCommand(QuerySelecionarPorId, Conexao);
+            Comando.Parameters.AddWithValue("@IdGenero", IdGenero);
             LeitorDeDados = Comando.ExecuteReader();
             while (LeitorDeDados.Read())
             {
                 Genero.IdGenero = Convert.ToInt32(LeitorDeDados[0]);
                 Genero.NomeGenero = Convert.ToString(LeitorDeDados[1]);
             }
+            Conexao.Close();
             return Genero;
         }
         public GeneroDomain BuscarPorNome(string NomeGenero)
         {
             GeneroDomain Genero = new GeneroDomain();
             SqlConnection Conexao = new SqlConnection(StringConexao);
-            string QuerySelecionarPorId = $"SELECT IDGenero, NomeGenero FROM GENERO WHERE NomeGenero = '{NomeGenero}'";
+            string QuerySelecionarPorId = $"SELECT IDGenero, NomeGenero FROM GENERO WHERE NomeGenero = @NomeGenero";
             Conexao.Open();
             SqlDataReader LeitorDeDados;
             SqlCommand Comando = new SqlCommand(QuerySelecionarPorId, Conexao);
+            Comando.Parameters.AddWithValue("@NomeGenero", NomeGenero);
             LeitorDeDados = Comando.ExecuteReader();
             while (LeitorDeDados.Read())
             {
                 Genero.IdGenero = Convert.ToInt32(LeitorDeDados[0]);
                 Genero.NomeGenero = Convert.ToString(LeitorDeDados[1]);
             }
+            Conexao.Close();
             return Genero;
         }
 
@@ -69,15 +73,26 @@ namespace senai_filmes_webAPI.Repositories
         public void Cadastrar(GeneroDomain NovoGenero)
         {
             SqlConnection Conexao = new SqlConnection(StringConexao);
-            string cmd = $"INSERT INTO Genero (NomeGenero) VALUES ('{NovoGenero.NomeGenero}')";
+            string cmd = $"INSERT INTO Genero (NomeGenero) VALUES (@NomeGenero)";
             Conexao.Open();
             SqlCommand Comando = new SqlCommand(cmd, Conexao);
+            Comando.Parameters.AddWithValue("@NomeGenero", NovoGenero.NomeGenero);
             Comando.ExecuteNonQuery();
+            Conexao.Close();
         }
 
         public void Deletar(int IdGenero)
         {
-            throw new NotImplementedException();
+            using (SqlConnection Conexao = new SqlConnection(StringConexao))
+            {
+                string QueryDeletar = "DELETE FROM Genero WHERE IDGenero = @IdGenero";
+                Conexao.Open();
+                using (SqlCommand Comando = new SqlCommand(QueryDeletar, Conexao))
+                {
+                    Comando.Parameters.AddWithValue("@IdGenero", IdGenero);
+                    Comando.ExecuteNonQuery();
+                }
+            }
         }
 
         public List<GeneroDomain> LerTodos()

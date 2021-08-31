@@ -33,17 +33,24 @@ namespace senai_filmes_webAPI.Controllers
         [HttpPost]
         public IActionResult Post(FilmeDomain NovoFilme)
         {
-            GeneroRepository GeneroRepositorio = new GeneroRepository();
-            GeneroDomain GeneroFilme = GeneroRepositorio.BuscarPorNome(NovoFilme.Genero.NomeGenero);
-            if (GeneroFilme != null)
-            {
-                FilmeRepositorio.Cadastrar(NovoFilme);
-                return StatusCode(201);
-            }
-            else
-            {
-                return StatusCode(400);
-            }
+            FilmeRepositorio.Cadastrar(NovoFilme);
+            return StatusCode(201);
+        }
+
+        [HttpDelete("Excluir/{IdFilme}")]
+        
+        public IActionResult Delete(int IdFilme)
+        {
+            FilmeRepositorio.Deletar(IdFilme);
+            return StatusCode(201);
+        }
+
+        [HttpDelete]
+
+        public IActionResult Delete(FilmeDomain FilmeDeletado)
+        {
+            FilmeRepositorio.Deletar(FilmeDeletado.IdFilme);
+            return StatusCode(201);
         }
     }
 }
