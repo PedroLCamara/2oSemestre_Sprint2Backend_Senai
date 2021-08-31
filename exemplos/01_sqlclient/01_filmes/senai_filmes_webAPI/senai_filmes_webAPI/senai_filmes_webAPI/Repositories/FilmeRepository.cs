@@ -13,28 +13,85 @@ namespace senai_filmes_webAPI.Repositories
         private string StringConexao = "Data Source=PEDRO-PC\\SQLEXPRESS; initial catalog=Catalogo; user Id=sa; pwd=senai@123";
         public void Atualizar(FilmeDomain FilmeAtualizado)
         {
-            throw new NotImplementedException();
+            using (SqlConnection Conexao = new SqlConnection(StringConexao))
+            {
+                string cmd = "UPDATE Filme SET TituloFilme = @TituloFilme, IDGenero = @IdGenero WHERE IDFilme = @IdFilme";
+                using (SqlCommand Comando = new SqlCommand(cmd, Conexao))
+                {
+                    Comando.Parameters.AddWithValue("@TituloFilme", FilmeAtualizado.Titulo);
+                    Comando.Parameters.AddWithValue("@IdFilme", FilmeAtualizado.IdFilme);
+                    Comando.Parameters.AddWithValue("@IdGenero", FilmeAtualizado.IdGenero);
+                    Conexao.Open();
+
+                    Comando.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Atualizar(FilmeDomain FilmeAtualizado, int IdFilme)
         {
-            throw new NotImplementedException();
+            using (SqlConnection Conexao = new SqlConnection(StringConexao))
+            {
+                string cmd = "UPDATE Filme SET TituloFilme = @TituloFilme, IDGenero = @IdGenero WHERE IDFilme = @IdFilme";
+                using (SqlCommand Comando = new SqlCommand(cmd, Conexao))
+                {
+                    Comando.Parameters.AddWithValue("@TituloFilme", FilmeAtualizado.Titulo);
+                    Comando.Parameters.AddWithValue("@IdFilme", IdFilme);
+                    Comando.Parameters.AddWithValue("@IdGenero", FilmeAtualizado.IdGenero);
+                    Conexao.Open();
+
+                    Comando.ExecuteNonQuery();
+                }
+            }
         }
 
         public FilmeDomain BuscarPorId(int IdFilme)
         {
-            throw new NotImplementedException();
+            GeneroRepository GeneroRepositorio = new GeneroRepository();
+            FilmeDomain Filme = new FilmeDomain();
+            SqlConnection Conexao = new SqlConnection(StringConexao);
+            string QuerySelecionarPorId = $"SELECT IDFilme, TituloFilme, IDGenero FROM Filme WHERE IDFilme = @IdFilme";
+            Conexao.Open();
+            SqlDataReader LeitorDeDados;
+            SqlCommand Comando = new SqlCommand(QuerySelecionarPorId, Conexao);
+            Comando.Parameters.AddWithValue("@IdFilme", IdFilme);
+            LeitorDeDados = Comando.ExecuteReader();
+            if (LeitorDeDados.Read() == true)
+            {
+                Filme.IdFilme = Convert.ToInt32(LeitorDeDados[0]);
+                Filme.Titulo = Convert.ToString(LeitorDeDados[1]);
+                if(LeitorDeDados[2] != DBNull.Value)
+                {
+                    Filme.IdGenero = Convert.ToInt32(LeitorDeDados[2]);
+                    Filme.Genero = GeneroRepositorio.BuscarPorId(Filme.IdGenero);
+                }
+                Conexao.Close();
+                return Filme;
+            }
+            else
+            {
+                Conexao.Close();
+                return null;
+            }
         }
 
         public void Cadastrar(FilmeDomain NovoFilme)
         {
             GeneroRepository GeneroRepositorio = new GeneroRepository();
             SqlConnection Conexao = new SqlConnection(StringConexao);
-            string cmd = $"INSERT INTO Filme (TituloFilme, IDGenero) VALUES (@Titulo, @IdGenero)";
+            string cmd = $"INSERT INTO Filme (TituloFilme, IDGenero) VALUES (@Titulo,@IdGenero)";
             Conexao.Open();
             SqlCommand Comando = new SqlCommand(cmd, Conexao);
             Comando.Parameters.AddWithValue("@Titulo", NovoFilme.Titulo);
-            Comando.Parameters.AddWithValue("@IdGenero", GeneroRepositorio.BuscarPorNome(NovoFilme.Genero.NomeGenero).IdGenero);
+            GeneroDomain teste = GeneroRepositorio.BuscarPorNome(NovoFilme.Genero.NomeGenero);
+            if (teste == null)
+            {
+                Comando.Parameters.AddWithValue("@IdGenero", DBNull.Value);
+            }
+            else
+            {
+                Comando.Parameters.AddWithValue("@IdGenero", GeneroRepositorio.BuscarPorNome(teste.NomeGenero).IdGenero);
+            }
             Comando.ExecuteNonQuery();
             Conexao.Close();
         }
@@ -65,12 +122,14 @@ namespace senai_filmes_webAPI.Repositories
             LeitorDeDados = Comando.ExecuteReader();
             while (LeitorDeDados.Read())
             {
-                FilmeDomain Filme = new FilmeDomain() {
-                    IdFilme = Convert.ToInt32(LeitorDeDados[0]),
-                    Titulo = Convert.ToString(LeitorDeDados[1]),
-                    IdGenero = Convert.ToInt32(LeitorDeDados[2]),
-                    Genero = RepositorioGenero.BuscarPorId(Convert.ToInt32(LeitorDeDados[2]))
-                };
+                FilmeDomain Filme = new FilmeDomain();
+                Filme.IdFilme = Convert.ToInt32(LeitorDeDados[0]);
+                Filme.Titulo = Convert.ToString(LeitorDeDados[1]);
+                if (LeitorDeDados[2] != DBNull.Value)
+                {
+                    Filme.IdGenero = Convert.ToInt32(LeitorDeDados[2]);
+                    Filme.Genero = RepositorioGenero.BuscarPorId(Convert.ToInt32(LeitorDeDados[2]));
+                }
                 ListaFilmes.Add(Filme);
             }
             Conexao.Close();

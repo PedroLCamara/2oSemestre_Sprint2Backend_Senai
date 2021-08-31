@@ -21,31 +21,58 @@ namespace senai_filmes_webAPI.Repositories
         private string StringConexao = "Data Source=PEDRO-PC\\SQLEXPRESS; initial catalog=Catalogo; user Id=sa; pwd=senai@123";
         public void Atualizar(GeneroDomain GeneroAtualizado)
         {
-            throw new NotImplementedException();
+            using(SqlConnection Conexao = new SqlConnection(StringConexao))
+            {
+                string cmd = "UPDATE Genero SET NomeGenero = @NomeGenero WHERE IDGenero = @IdGenero";
+                using(SqlCommand Comando = new SqlCommand(cmd, Conexao))
+                {
+                    Comando.Parameters.AddWithValue("@NomeGenero", GeneroAtualizado.NomeGenero);
+                    Comando.Parameters.AddWithValue("@IdGenero", GeneroAtualizado.IdGenero);
+                    Conexao.Open();
+
+                    Comando.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Atualizar(int IdGenero, GeneroDomain GeneroAtualizado)
         {
-            throw new NotImplementedException();
+            using (SqlConnection Conexao = new SqlConnection(StringConexao))
+            {
+                string cmd = "UPDATE Genero SET NomeGenero = @NomeGenero WHERE IDGenero = @IdGenero";
+                using (SqlCommand Comando = new SqlCommand(cmd, Conexao))
+                {
+                    Comando.Parameters.AddWithValue("@NomeGenero", GeneroAtualizado.NomeGenero);
+                    Comando.Parameters.AddWithValue("@IdGenero", IdGenero);
+                    Conexao.Open();
+
+                    Comando.ExecuteNonQuery();
+                }
+            }
         }
 
         public GeneroDomain BuscarPorId(int IdGenero)
         {
             GeneroDomain Genero = new GeneroDomain();
             SqlConnection Conexao = new SqlConnection(StringConexao);
-            string QuerySelecionarPorId = $"SELECT IDGenero, NomeGenero FROM GENERO WHERE IDGenero = @IdGenero";
+            string QuerySelecionarPorId = $"SELECT IDGenero, NomeGenero FROM Genero WHERE IDGenero = @IdGenero";
             Conexao.Open();
             SqlDataReader LeitorDeDados;
             SqlCommand Comando = new SqlCommand(QuerySelecionarPorId, Conexao);
             Comando.Parameters.AddWithValue("@IdGenero", IdGenero);
             LeitorDeDados = Comando.ExecuteReader();
-            while (LeitorDeDados.Read())
+            if (LeitorDeDados.Read() == true)
             {
                 Genero.IdGenero = Convert.ToInt32(LeitorDeDados[0]);
                 Genero.NomeGenero = Convert.ToString(LeitorDeDados[1]);
+                Conexao.Close();
+                return Genero;
             }
-            Conexao.Close();
-            return Genero;
+            else
+            {
+                Conexao.Close();
+                return null;
+            }
         }
         public GeneroDomain BuscarPorNome(string NomeGenero)
         {
@@ -57,13 +84,18 @@ namespace senai_filmes_webAPI.Repositories
             SqlCommand Comando = new SqlCommand(QuerySelecionarPorId, Conexao);
             Comando.Parameters.AddWithValue("@NomeGenero", NomeGenero);
             LeitorDeDados = Comando.ExecuteReader();
-            while (LeitorDeDados.Read())
+            if (LeitorDeDados.Read() == true)
             {
                 Genero.IdGenero = Convert.ToInt32(LeitorDeDados[0]);
                 Genero.NomeGenero = Convert.ToString(LeitorDeDados[1]);
+                Conexao.Close();
+                return Genero;
             }
-            Conexao.Close();
-            return Genero;
+            else
+            {
+                Conexao.Close();
+                return null;
+            }
         }
 
         /// <summary>
