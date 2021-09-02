@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "f4f6ff4d-a022-45ca-8265-59ecb932d2cf",
+		"name": "Locacao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Locacao.ListarTodos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/Locacoes/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Locacoes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Locacao.BuscarPorId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/Locacoes/4",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Locacoes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Locacao.Cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"DataRetirada\": \"2021-09-02\",\r\n    \"DataDevolucao\": \"2021-10-02\",\r\n    \"StatusDevolucao\": \"No prazo\",\r\n    \"IdCliente\": 1,\r\n    \"IdVeiculo\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/Locacoes/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Locacoes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Locacao.Atualizar(IdURL)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"StatusDevolucao\": \"Calote\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/Locacoes/4",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Locacoes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Locacao.Atualizar(IdJson)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"IdLocacao\": 4,\r\n    \"StatusDevolucao\": \"Ok\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/Locacoes/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Locacoes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Locacao.Deletar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/Locacoes/7",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Locacoes",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

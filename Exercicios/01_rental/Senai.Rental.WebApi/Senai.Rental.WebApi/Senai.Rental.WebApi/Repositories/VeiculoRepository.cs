@@ -12,9 +12,12 @@ namespace Senai.Rental.WebApi.Repositories
     {
         public void Atualizar(VeiculoDomain VeiculoAtualizado)
         {
+            EmpresaRepository EmpresaRepositorio = new EmpresaRepository();
+            ModeloRepository ModeloRepositorio = new ModeloRepository();
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
-                string CmdUpdate = "UPDATE Veiculo SET IdEmpresa = @IdEmpresa, IdModelo = @IdMoleo, Placa = @Placa WHERE IdVeiculo = @IdVeiculo";
+                string CmdUpdate = "UPDATE Veiculo SET IdEmpresa = @IdEmpresa, IdModelo = @IdModelo, Placa = @Placa WHERE IdVeiculo = @IdVeiculo";
+                Conexao.Open();
                 using(SqlCommand Comando = new SqlCommand(CmdUpdate, Conexao))
                 {
                     Comando.Parameters.AddWithValue("@IdVeiculo", VeiculoAtualizado.IdVeiculo);
@@ -25,43 +28,21 @@ namespace Senai.Rental.WebApi.Repositories
                     {
                         Comando.Parameters.AddWithValue("@Placa", BuscarPorId(VeiculoAtualizado.IdVeiculo).Placa);
                     }
-                    string CmdSelectEmpresa = "SELECT IdEmpresa FROM Empresa WHERE NomeEmpresa = @NomeEmpresa";
-                    SqlDataReader LeitorDeDadosEmpresa;
-                    using (SqlCommand ComandoSecundario = new SqlCommand(CmdSelectEmpresa, Conexao))
+                    if (EmpresaRepositorio.BuscarPorId(VeiculoAtualizado.IdEmpresa) != null)
                     {
-                        ComandoSecundario.Parameters.AddWithValue("@NomeEmpresa", VeiculoAtualizado.Empresa.NomeEmpresa);
-                        LeitorDeDadosEmpresa = ComandoSecundario.ExecuteReader();
-                        if (LeitorDeDadosEmpresa.Read())
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", LeitorDeDadosEmpresa[0]);
-                        }
-                        else if (VeiculoAtualizado.IdEmpresa > 0)
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", VeiculoAtualizado.IdEmpresa);
-                        }
-                        else
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", BuscarPorId(VeiculoAtualizado.IdVeiculo).IdEmpresa);
-                        }
+                        Comando.Parameters.AddWithValue("@IdEmpresa", VeiculoAtualizado.IdEmpresa);
                     }
-                    string CmdSelectModelo = "SELECT IdModelo FROM Modelo WHERE NomeModelo = @NomeModelo";
-                    SqlDataReader LeitorDeDadosModelo;
-                    using (SqlCommand ComandoSecundario = new SqlCommand(CmdSelectModelo, Conexao))
+                    else
                     {
-                        ComandoSecundario.Parameters.AddWithValue("@NomeModelo", VeiculoAtualizado.Modelo.NomeModelo);
-                        LeitorDeDadosModelo = ComandoSecundario.ExecuteReader();
-                        if (LeitorDeDadosModelo.Read())
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", LeitorDeDadosModelo[0]);
-                        }
-                        else if (VeiculoAtualizado.IdModelo > 0)
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", VeiculoAtualizado.IdModelo);
-                        }
-                        else
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", BuscarPorId(VeiculoAtualizado.IdVeiculo).IdModelo);
-                        }
+                        Comando.Parameters.AddWithValue("@IdEmpresa", BuscarPorId(VeiculoAtualizado.IdVeiculo).IdEmpresa);
+                    }
+                    if (ModeloRepositorio.BuscarPorId(VeiculoAtualizado.IdModelo) != null)
+                    {
+                        Comando.Parameters.AddWithValue("@IdModelo", VeiculoAtualizado.IdModelo);
+                    }
+                    else
+                    {
+                        Comando.Parameters.AddWithValue("@IdModelo", BuscarPorId(VeiculoAtualizado.IdVeiculo).IdModelo);
                     }
                     Comando.ExecuteNonQuery();
                 }
@@ -70,9 +51,12 @@ namespace Senai.Rental.WebApi.Repositories
 
         public void Atualizar(VeiculoDomain VeiculoAtualizado, int IdVeiculo)
         {
+            EmpresaRepository EmpresaRepositorio = new EmpresaRepository();
+            ModeloRepository ModeloRepositorio = new ModeloRepository();
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
-                string CmdUpdate = "UPDATE Veiculo SET IdEmpresa = @IdEmpresa, IdModelo = @IdMoleo, Placa = @Placa WHERE IdVeiculo = @IdVeiculo";
+                string CmdUpdate = "UPDATE Veiculo SET IdEmpresa = @IdEmpresa, IdModelo = @IdModelo, Placa = @Placa WHERE IdVeiculo = @IdVeiculo";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdUpdate, Conexao))
                 {
                     Comando.Parameters.AddWithValue("@IdVeiculo", IdVeiculo);
@@ -84,43 +68,21 @@ namespace Senai.Rental.WebApi.Repositories
                     {
                         Comando.Parameters.AddWithValue("@Placa", BuscarPorId(IdVeiculo).Placa);
                     }
-                    string CmdSelectEmpresa = "SELECT IdEmpresa FROM Empresa WHERE NomeEmpresa = @NomeEmpresa";
-                    SqlDataReader LeitorDeDadosEmpresa;
-                    using (SqlCommand ComandoSecundario = new SqlCommand(CmdSelectEmpresa, Conexao))
+                    if (EmpresaRepositorio.BuscarPorId(VeiculoAtualizado.IdEmpresa) != null)
                     {
-                        ComandoSecundario.Parameters.AddWithValue("@NomeEmpresa", VeiculoAtualizado.Empresa.NomeEmpresa);
-                        LeitorDeDadosEmpresa = ComandoSecundario.ExecuteReader();
-                        if (LeitorDeDadosEmpresa.Read())
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", LeitorDeDadosEmpresa[0]);
-                        }
-                        else if (VeiculoAtualizado.IdEmpresa > 0)
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", VeiculoAtualizado.IdEmpresa);
-                        }
-                        else
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", BuscarPorId(IdVeiculo).IdEmpresa);
-                        }
+                        Comando.Parameters.AddWithValue("@IdEmpresa", VeiculoAtualizado.IdEmpresa);
                     }
-                    string CmdSelectModelo = "SELECT IdModelo FROM Modelo WHERE NomeModelo = @NomeModelo";
-                    SqlDataReader LeitorDeDadosModelo;
-                    using (SqlCommand ComandoSecundario = new SqlCommand(CmdSelectModelo, Conexao))
+                    else
                     {
-                        ComandoSecundario.Parameters.AddWithValue("@NomeModelo", VeiculoAtualizado.Modelo.NomeModelo);
-                        LeitorDeDadosModelo = ComandoSecundario.ExecuteReader();
-                        if (LeitorDeDadosModelo.Read())
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", LeitorDeDadosModelo[0]);
-                        }
-                        else if (VeiculoAtualizado.IdModelo > 0)
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", VeiculoAtualizado.IdModelo);
-                        }
-                        else
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", BuscarPorId(IdVeiculo).IdModelo);
-                        }
+                        Comando.Parameters.AddWithValue("@IdEmpresa", BuscarPorId(IdVeiculo).IdEmpresa);
+                    }
+                    if (ModeloRepositorio.BuscarPorId(VeiculoAtualizado.IdModelo) != null)
+                    {
+                        Comando.Parameters.AddWithValue("@IdModelo", VeiculoAtualizado.IdModelo);
+                    }
+                    else
+                    {
+                        Comando.Parameters.AddWithValue("@IdModelo", BuscarPorId(IdVeiculo).IdModelo);
                     }
                     Comando.ExecuteNonQuery();
                 }
@@ -133,6 +95,7 @@ namespace Senai.Rental.WebApi.Repositories
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdSelectAll = "SELECT IdVeiculo, IdEmpresa, IdModelo, Placa FROM Veiculo WHERE IdVeiculo = @IdVeiculo";
+                Conexao.Open();
                 SqlDataReader LeitorDeDados;
                 using (SqlCommand Comando = new SqlCommand(CmdSelectAll, Conexao))
                 {
@@ -156,49 +119,29 @@ namespace Senai.Rental.WebApi.Repositories
 
         public void Cadastrar(VeiculoDomain NovoVeiculo)
         {
-            using(SqlConnection Conexao = new SqlConnection(StringConexao))
+            EmpresaRepository EmpresaRepositorio = new EmpresaRepository();
+            ModeloRepository ModeloRepositorio = new ModeloRepository();
+            using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdInsertInto = "INSERT INTO Veiculo (IdEmpresa, IdModelo, Placa) VALUES (@IdEmpresa, @IdModelo, @Placa)";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdInsertInto, Conexao))
                 {
                     Comando.Parameters.AddWithValue("@Placa", NovoVeiculo.Placa);
-                    string CmdSelectEmpresa = "SELECT IdEmpresa FROM Empresa WHERE NomeEmpresa = @NomeEmpresa";
-                    SqlDataReader LeitorDeDadosEmpresa;
-                    using(SqlCommand ComandoSecundario = new SqlCommand(CmdSelectEmpresa, Conexao))
-                    {
-                        ComandoSecundario.Parameters.AddWithValue("@NomeEmpresa", NovoVeiculo.Empresa.NomeEmpresa);
-                        LeitorDeDadosEmpresa = ComandoSecundario.ExecuteReader();
-                        if (LeitorDeDadosEmpresa.Read())
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", LeitorDeDadosEmpresa[0]);
-                        }
-                        else if (NovoVeiculo.IdEmpresa > 0)
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", NovoVeiculo.IdEmpresa);
-                        }
-                        else
-                        {
-                            Comando.Parameters.AddWithValue("@IdEmpresa", DBNull.Value);
-                        }
+                    if(EmpresaRepositorio.BuscarPorId(NovoVeiculo.IdEmpresa) != null){
+                        Comando.Parameters.AddWithValue("@IdEmpresa", NovoVeiculo.IdEmpresa);
                     }
-                    string CmdSelectModelo = "SELECT IdModelo FROM Modelo WHERE NomeModelo = @NomeModelo";
-                    SqlDataReader LeitorDeDadosModelo;
-                    using (SqlCommand ComandoSecundario = new SqlCommand(CmdSelectModelo, Conexao))
+                    else
                     {
-                        ComandoSecundario.Parameters.AddWithValue("@NomeModelo", NovoVeiculo.Modelo.NomeModelo);
-                        LeitorDeDadosModelo = ComandoSecundario.ExecuteReader();
-                        if (LeitorDeDadosModelo.Read())
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", LeitorDeDadosModelo[0]);
-                        }
-                        else if (NovoVeiculo.IdModelo > 0)
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", NovoVeiculo.IdModelo);
-                        }
-                        else
-                        {
-                            Comando.Parameters.AddWithValue("@IdModelo", DBNull.Value);
-                        }
+                        Comando.Parameters.AddWithValue("@IdEmpresa", DBNull.Value);
+                    }
+                    if (ModeloRepositorio.BuscarPorId(NovoVeiculo.IdModelo) != null)
+                    {
+                        Comando.Parameters.AddWithValue("@IdModelo", NovoVeiculo.IdModelo);
+                    }
+                    else
+                    {
+                        Comando.Parameters.AddWithValue("@IdModelo", DBNull.Value);
                     }
                     Comando.ExecuteNonQuery();
                 }
@@ -210,6 +153,7 @@ namespace Senai.Rental.WebApi.Repositories
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdDelete = "DELETE FROM Veiculo WHERE IdVeiculo = @IdVeiculo";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdDelete, Conexao))
                 {
                     Comando.Parameters.AddWithValue("@IdVeiculo", IdVeiculoDeletado);
@@ -224,6 +168,7 @@ namespace Senai.Rental.WebApi.Repositories
             using(SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdSelectAll = "SELECT IdVeiculo, IdEmpresa, IdModelo, Placa FROM Veiculo";
+                Conexao.Open();
                 SqlDataReader LeitorDeDados;
                 using (SqlCommand Comando = new SqlCommand(CmdSelectAll, Conexao))
                 {

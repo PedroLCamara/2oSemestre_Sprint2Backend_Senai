@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Senai.Rental.WebApi.Interfaces
 {
-    interface IEmpresaRepository
+    interface IModeloRepository
     {
-        EmpresaDomain BuscarPorId(int IdEmpresa);
+        ModeloDomain BuscarPorId(int IdModelo);
     }
 }

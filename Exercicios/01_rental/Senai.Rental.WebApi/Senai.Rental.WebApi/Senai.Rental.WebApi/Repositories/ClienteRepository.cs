@@ -15,6 +15,7 @@ namespace Senai.Rental.WebApi.Repositories
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdUpdate = "UPDATE Cliente SET CPF = @CPF, NomeCliente = @Nome, SobrenomeCliente = @Sobrenome WHERE IdCliente = @IdCliente";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdUpdate, Conexao))
                 {
                     Comando.Parameters.AddWithValue("IdCliente", ClienteAtualizado.IdCliente);
@@ -51,6 +52,7 @@ namespace Senai.Rental.WebApi.Repositories
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdUpdate = "UPDATE Cliente SET CPF = @CPF, NomeCliente = @Nome, SobrenomeCliente = @Sobrenome WHERE IdCliente = @IdCliente";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdUpdate, Conexao))
                 {
                     Comando.Parameters.AddWithValue("IdCliente", IdCliente);
@@ -116,6 +118,7 @@ namespace Senai.Rental.WebApi.Repositories
             using(SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdInsertInto = "INSERT INTO Cliente (CPF, NomeCliente, SobrenomeCliente) VALUES (@CPF, @Nome, @Sobrenome)";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdInsertInto, Conexao))
                 {
                     Comando.Parameters.AddWithValue("@CPF", NovoCliente.CPF);
@@ -131,6 +134,7 @@ namespace Senai.Rental.WebApi.Repositories
             using (SqlConnection Conexao = new SqlConnection(StringConexao))
             {
                 string CmdDelete = "DELETE FROM Cliente WHERE IdCliente = @IdCliente";
+                Conexao.Open();
                 using (SqlCommand Comando = new SqlCommand(CmdDelete, Conexao))
                 {
                     Comando.Parameters.AddWithValue("@IdCliente", IdClienteDeletado);
