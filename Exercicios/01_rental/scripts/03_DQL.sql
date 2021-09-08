@@ -18,3 +18,11 @@ GO
 
 SELECT * FROM Locacao;
 GO
+
+--Alterações (não necessárias) para JWT e Data Annotations
+
+SELECT * FROM Usuario;
+GO
+
+SELECT * FROM TipoUsuario;
+GO

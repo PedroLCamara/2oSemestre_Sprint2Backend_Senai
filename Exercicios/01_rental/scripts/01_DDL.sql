@@ -48,3 +48,26 @@ create table Locacao(
 	StatusDevolucao varchar(50) not null,
 );
 go
+
+--Alterações para JWT e Data Annotations
+CREATE TABLE TipoUsuario(
+	IdTipoUsuario TINYINT PRIMARY KEY IDENTITY(1,1),
+	NomeTipoUsuario VARCHAR(50) NOT NULL UNIQUE,
+);
+GO
+
+CREATE TABLE Usuario(
+	IdUsuario INT PRIMARY KEY IDENTITY(1,1),
+	IdTipoUsuario TINYINT FOREIGN KEY REFERENCES TipoUsuario(IdTipoUsuario)
+);
+GO
+
+ALTER TABLE Cliente
+ADD IdUsuario INT FOREIGN KEY REFERENCES Usuario(IdUsuario);
+GO
+
+--Após adicionar os ids de usuário aos clientes (DML)
+
+ALTER TABLE Cliente 
+ADD CONSTRAINT IdUsuarioUnico UNIQUE (IdUsuario);
+GO

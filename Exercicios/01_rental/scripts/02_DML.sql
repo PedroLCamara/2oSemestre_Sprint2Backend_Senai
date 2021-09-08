@@ -24,3 +24,28 @@ GO
 INSERT INTO Locacao (IdCliente, IdVeiculo, DataRetirada, DataDevolucao, StatusDevolucao)
 VALUES (1, 2, '01/01/2020', '05/01/2020', 'Devolvido'), (2, 2, '02/02/2021', '06/02/2021', 'Devolvido'), (3, 3, '03/03/2021', '07/03/2021', 'Devolvido');
 GO
+
+--Alterações para JWT e Data Annotations
+
+INSERT INTO TipoUsuario(NomeTipoUsuario)
+VALUES ('Administrador'), ('Comum');
+GO
+
+INSERT INTO Usuario(IdTipoUsuario)
+VALUES (2), (2), (2);
+GO
+
+UPDATE Cliente 
+SET IdUsuario = 1
+WHERE IdCliente = 1;
+GO
+
+UPDATE Cliente 
+SET IdUsuario = 2
+WHERE IdCliente = 2;
+GO
+
+UPDATE Cliente 
+SET IdUsuario = 3
+WHERE IdCliente = 3;
+GO
