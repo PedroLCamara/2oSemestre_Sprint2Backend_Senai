@@ -19,6 +19,7 @@ namespace Gufi.webAPI.Domains
         public string NomeUsuario { get; set; }
 
         public virtual TipoUsuario IdTipoUsuarioNavigation { get; set; }
+        public virtual ImagemPerfil ImagemPerfil { get; set; }
         public virtual ICollection<Presenca> Presencas { get; set; }
     }
 }
