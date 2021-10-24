@@ -60,7 +60,6 @@ C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.w
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\staticwebassets\Gufi.webAPI.StaticWebAssets.xml
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\scopedcss\bundle\Gufi.webAPI.styles.css
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.RazorTargetAssemblyInfo.cache
-C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.csproj.CopyComplete
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.dll
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\ref\Gufi.webAPI.dll
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.pdb
