@@ -64,3 +64,5 @@ C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.w
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\ref\Gufi.webAPI.dll
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.pdb
 C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.genruntimeconfig.cache
+C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\bin\Debug\net5.0\Gufi.webAPI.xml
+C:\Users\Pedro\Desktop\Senai\2oSemestre\sprint-2-backend\gufi\Gufi.webAPI\Gufi.webAPI\obj\Debug\net5.0\Gufi.webAPI.xml

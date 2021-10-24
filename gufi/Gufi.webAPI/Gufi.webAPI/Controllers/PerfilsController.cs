@@ -82,7 +82,7 @@ namespace Gufi.webAPI.Controllers
         }
 
         [Authorize(Roles = "1,2")]
-        [HttpGet]
+        [HttpGet("Imagem/Bd")]
         public IActionResult GetBD()
         {
             try
@@ -101,7 +101,7 @@ namespace Gufi.webAPI.Controllers
         }
 
         [Authorize(Roles = "1,2")]
-        [HttpGet]
+        [HttpGet("Imagem/Dir")]
         public IActionResult GetDir()
         {
             try
